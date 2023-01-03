@@ -1,0 +1,151 @@
+@use "../abstracts/mixins";
+
+$transition-menu-check-duration: 0.4s;
+$animation-delay-food-load: 0.2s;
+
+.restaurant-main {
+    margin-top: -40px;
+    position: relative;
+    z-index: 2;
+    border-radius: 40px 40px 0 0;
+    background: hsl(0, 0%, 97%);
+    padding: 40px 12px;
+}
+
+.restaurant-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 28px;
+    margin-bottom: 30px;
+
+    > h1 {
+        font-size: 1.5em;
+    }
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    margin-bottom: 40px;
+
+    @include mixins.not-mobile {
+        flex-flow: row wrap;
+        justify-content: space-between;    
+    }
+}
+
+.service {
+
+    &__title {
+        text-transform: uppercase;
+        margin-bottom: 6px;
+    }
+
+    &__underline {
+        width: 40px;
+        border-bottom: 3px solid hsl(164, 58%, 78%);
+        margin-bottom: 11px;
+    }   
+
+    &__foods-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+    }
+}
+
+.food-item {
+    $f: &;
+
+    display: flex;
+    background-color: hsl(0, 0%, 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    height: 0px;
+    opacity: 0.3;
+    cursor: pointer;
+
+    @include mixins.box-shadow-default; 
+
+    @for $i from 1 through 3 {
+        &:nth-child(#{$i}) {
+            animation: increase-food-height 0.4s calc(#{$i}*#{$animation-delay-food-load}) forwards ease-in, increase-food-opacity 1s calc(#{$i}*#{$animation-delay-food-load}) forwards ease-in;
+        }
+    }
+
+    &__visible {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+        padding: 15px 20px 10px 10px;
+    }
+
+    &__details {
+        width: 90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__name {
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    &__recipe {
+        white-space: nowrap;
+        font-size: 0.9rem;
+    }
+
+    &__price {
+        font-weight: bold;
+    }
+
+    &__hidden {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 0px;
+        background: hsl(164, 58%, 78%);
+        overflow: hidden;
+        transition: all $transition-menu-check-duration ease-in;
+
+        #{$f}:hover & {
+            width: 30%;
+        }
+    }
+
+    &__check {
+        color: hsl(164, 58%, 78%);
+        background-color: hsl(0, 0%, 100%);
+        border-radius: 50%;
+        padding: 5px;
+        transition: transform $transition-menu-check-duration linear;
+
+        #{$f}:hover & {
+            transform: rotate(1turn);
+        }
+    }
+}
+
+.command-menu {
+    display: flex;
+    justify-content: center;
+}
+
+@keyframes increase-food-opacity {
+    to {
+        opacity: 1;
+    }
+} 
+
+@keyframes increase-food-height {
+    0% {
+        height: 0;
+    }
+    100% {
+        height: auto;
+    }
+}

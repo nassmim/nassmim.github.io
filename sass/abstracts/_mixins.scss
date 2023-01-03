@@ -1,0 +1,38 @@
+$breakpoints: (
+  'tablet': 768px,
+  'desktop': 1024px,
+);
+
+@mixin not-mobile {
+  @media screen and (min-width: map-get($breakpoints, tablet)) {
+    @content
+  }
+};
+
+@mixin box-shadow-default {
+  box-shadow: 2px 1px 7px 2px rgb(0 0 0 / 10%);
+};
+
+@mixin change-bg-colour($color, $duration: 250ms, $content) {
+
+  &::after {
+    content: $content;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: $color;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity $duration;
+  }
+
+  &:hover {
+      &::after {
+          opacity: 1;
+      }
+  }  
+}
+
+

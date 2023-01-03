@@ -1,0 +1,9 @@
+@use "../abstracts/mixins";
+
+@include mixins.not-mobile {
+    .page__container {
+        max-width: 1300;
+        margin: 0 auto;
+    }
+
+}

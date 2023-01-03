@@ -1,0 +1,53 @@
+.card {
+    border-radius: 20px;
+    background: hsl(0, 0%, 100%);
+    z-index: 1;
+
+    &__header {
+            position: relative;
+
+        }
+        
+        &__new-restaurant {
+            position: absolute;
+            top: 12px;
+            right: 10px;
+            padding: 7px 10px;
+            background: hsl(165, 56%, 75%);
+            color: darken(hsl(165, 56%, 50%), 20%);
+            font-weight: bold;            
+        }
+
+    &__image {
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        max-height: 175px;
+    }
+
+    &__body {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px 15px 10px;
+    }
+        
+    &__presentation {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding-bottom: 5px;
+    }
+
+    &__city {
+        color: lighten(hsl(0, 0%, 0%), 20%);
+        font-size: 0.85rem;
+    }
+
+    &__like {
+        z-index: 2;
+    }
+}

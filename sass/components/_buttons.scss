@@ -1,0 +1,107 @@
+@use "../base";
+@use "../abstracts/mixins";
+
+$keyframes-move-up-duration: 3s;
+
+.base-btn {
+    position: relative;
+    padding: 15px 20px;
+    background: linear-gradient(175deg, map-get(base.$secondary-color, 'rgba') 0%, map-get(base.$primary-color, 'rgba') 100%);
+    border-radius: 50px;
+    color: white;
+    border: none;
+    z-index: 1;
+    overflow: hidden;
+    cursor:pointer;
+
+    @include mixins.box-shadow-default;
+    
+    @include mixins.change-bg-colour(
+        linear-gradient(360deg, lighten(map-get(base.$primary-color, 'rgba'), 10%) 0%,lighten(map-get(base.$secondary-color, 'rgba'), 10%) 76%),
+        250ms,
+        ""
+    );
+
+    &--command {
+        padding-right: 45px;
+        padding-left: 45px;
+    }
+}
+
+/* Version simple pour avoir le coeur se remplissant progressivement */
+// .like-btn {
+
+//     &__icon {
+//         fill: transparent;
+//         stroke: black;
+//         stroke-width: 20px;
+//         transition: all 2s linear;
+//     }
+
+//     &:hover {
+//         > .like-btn__icon {
+//             fill: red;
+//         }
+//     }
+// }
+
+.like-btn {
+    $lb: &;
+    
+    height: 25px;
+    width: 25px;
+    overflow: hidden;
+    cursor: pointer;
+    
+    &__icon {
+        height: 25px;
+        width: 25px;
+        position: absolute;
+        font-size: 25px; 
+        background: #fff;
+        fill: hsl(0, 0%, 100%);
+        stroke: hsl(0, 0%, 0%);
+        stroke-width: 20px;
+
+        &--menu {
+            background: hsl(0, 0%, 97%);
+        }
+    }
+
+    &__moving-icon {
+        width: 25px;
+        height: 25px;
+        fill: hsl(0, 0%, 100%);
+    }
+
+    &:hover {
+
+        #{$lb}__icon {
+            animation: fill-color calc($keyframes-move-up-duration/2) calc($keyframes-move-up-duration/2) forwards; 
+        }
+
+        #{$lb}__fill {
+            animation: move-color-up $keyframes-move-up-duration cubic-bezier(.2, .6, .8, .4) 1 forwards;
+            mix-blend-mode: lighten;
+        }
+
+        #{$lb}__moving-icon {
+            fill: hsl(317, 100%, 74%);
+        }
+    }
+}
+
+@keyframes fill-color {
+    100% {
+        fill: hsl(317, 100%, 74%);   
+    }
+}
+
+@keyframes move-color-up {
+    0% {
+        transform: translate(0, 25px);
+    }
+    100% {
+        transform: translate(0, -25px);
+    }
+}

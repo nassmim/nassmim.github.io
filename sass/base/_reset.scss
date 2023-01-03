@@ -1,0 +1,30 @@
+@use "../vendors/reset";
+
+ol, ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+@for $i from 1 through 6 {
+    h#{$i} {
+        margin: 0;
+    }
+}
+
+$tags: (div, p, figure, section);
+
+@each $tag in $tags {
+    #{$tag} {
+        margin: 0
+    }
+}
+
+a {
+    text-decoration: none;
+    color: hsl(0, 0%, 0%);
+}
+
+a:visited {
+    color: initial;
+}

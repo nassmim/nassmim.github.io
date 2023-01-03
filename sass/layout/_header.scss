@@ -1,13 +1,53 @@
-// -----------------------------------------------------------------------------
-// This file contains all styles related to the header of the site/application.
-// -----------------------------------------------------------------------------
-@charset 'utf-8';
+@use "../abstracts/mixins";
 
-.header__logo {
-    text-align: center;
-    padding: 21px 0 10px 0;
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    img {
-        width: 43%;
+    &__back-btn {
+        flex: 1;
+        transform: translateX(20px);
+
+        @include mixins.not-mobile {
+            font-size: 1.5rem;
+        }
     }
+
+    &__logo {
+
+        flex: 1;
+        text-align: center;
+        padding: 21px 0 10px 0;
+        
+        > img {
+            width: 162px;  
+
+            @include mixins.not-mobile {
+                width: 200px;
+            }       
+        }
+
+    }
+
+    &::after {
+        content: " ";
+        display: block;
+        flex: 1;
+    }
+
+    &--home {
+
+        &::after {
+            flex: 0;
+        }        
+    }        
+
 }
+
+.restaurant-cover > img {
+    width: 100%;
+}
+
+
+

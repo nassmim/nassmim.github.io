@@ -1,0 +1,59 @@
+@use "../abstracts/mixins";
+
+.footer {
+    padding: 25px 0 35px 25px;
+    background: hsl(0, 0%, 30%);;
+    
+    &__logo {
+        padding-bottom: 21px;
+
+        a {
+            display: flex;
+
+            svg {
+                width: 98px;
+                height: auto;
+    
+                @include mixins.not-mobile {
+                    width: 200px;
+                }
+    
+                path {
+                    fill:hsl(0, 0%, 100%)
+                }
+            }
+        }
+    }
+
+    &__links {
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+
+        @include mixins.not-mobile {
+            flex-direction: row;
+            justify-content: center;
+            column-gap: 10%;
+        }
+
+        li {
+            display: flex;
+            column-gap: 10px;
+        }
+    }
+
+    &__partnership-links, &__infos-links {
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+    }
+
+    &__icon {
+        color: hsl(0, 0%, 100%);
+    }
+
+    &__link, &__link:visited {
+        color: hsl(0, 0%, 100%);
+    }
+}
+

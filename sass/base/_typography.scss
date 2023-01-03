@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+
+$base-font-famiy: 'Roboto';
+$title-font-famiy: 'Shrikhand';
+
+html {
+    font-family: $base-font-famiy, sans-serif; 
+    font-size: 100%;
+}
+
+@for $i from 1 through 6 {
+    h#{$i} {
+        font-family: $title-font-famiy, cursive;
+    }
+}
