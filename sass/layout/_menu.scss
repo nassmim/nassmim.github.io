@@ -1,14 +1,22 @@
 @use "../abstracts/mixins";
+@use "../base/colors";
 
-$transition-menu-check-duration: 0.4s;
-$animation-delay-food-load: 0.2s;
+$terciary-color: map-get(colors.$terciary-color, 'hsl');
+
+$transition-menu-check-duration: 400ms;
+
+$animation-food-load-duration: 450ms;
+$animation-food-opacity-duration: 1000ms;
+$food-numbers: 3;
+$animation-food-load-delay: calc($animation-food-load-duration / $food-numbers);
+$animation-food-opacity-delay: calc($animation-food-opacity-duration / $food-numbers);
 
 .restaurant-main {
     margin-top: -40px;
     position: relative;
     z-index: 2;
     border-radius: 40px 40px 0 0;
-    background: hsl(0, 0%, 97%);
+    background: map-get(colors.$background-color, 'hsl');
     padding: 40px 12px;
 }
 
@@ -45,7 +53,7 @@ $animation-delay-food-load: 0.2s;
 
     &__underline {
         width: 40px;
-        border-bottom: 3px solid hsl(164, 58%, 78%);
+        border-bottom: 3px solid $terciary-color;
         margin-bottom: 11px;
     }   
 
@@ -69,9 +77,9 @@ $animation-delay-food-load: 0.2s;
 
     @include mixins.box-shadow-default; 
 
-    @for $i from 1 through 3 {
+    @for $i from 1 through $food-numbers {
         &:nth-child(#{$i}) {
-            animation: increase-food-height 0.4s calc(#{$i}*#{$animation-delay-food-load}) forwards ease-in, increase-food-opacity 1s calc(#{$i}*#{$animation-delay-food-load}) forwards ease-in;
+            animation: increase-food-height $animation-food-load-duration $i*$animation-food-load-delay forwards ease-in, increase-food-opacity $animation-food-opacity-duration $i*$animation-food-opacity-delay forwards ease-in;
         }
     }
 
@@ -108,7 +116,7 @@ $animation-delay-food-load: 0.2s;
         justify-content: center;
         align-items: center;
         width: 0px;
-        background: hsl(164, 58%, 78%);
+        background: $terciary-color;
         overflow: hidden;
         transition: all $transition-menu-check-duration ease-in;
 
@@ -118,7 +126,7 @@ $animation-delay-food-load: 0.2s;
     }
 
     &__check {
-        color: hsl(164, 58%, 78%);
+        color: $terciary-color;
         background-color: hsl(0, 0%, 100%);
         border-radius: 50%;
         padding: 5px;

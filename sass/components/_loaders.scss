@@ -1,0 +1,54 @@
+@use "../abstracts/mixins";
+@use "../base/colors";
+
+$circle-duration: 1000ms;
+$loading-total-duration: 3000ms;
+$loading-spinning-number: calc($loading-total-duration/$circle-duration);
+
+$terminate-load-duration: 2000ms;
+$terminate-load-delay: calc($loading-total-duration - $terminate-load-duration);
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes terminate-load {
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes remove-spinner {
+    to {
+        height: 0;
+    }
+}
+
+  .spinner {
+    position: relative;
+    aspect-ratio: 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: terminate-load $terminate-load-duration $terminate-load-delay ease-out forwards, remove-spinner 0s $loading-total-duration linear forwards;
+  }
+
+  .spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    aspect-ratio: 1;
+    width: 100px;
+    border-radius: 50%;
+    border: 2px solid map-get(colors.$background-color, 'hsl');
+    border-top-color: map-get(colors.$secondary-color, 'hsl');
+    border-bottom-color: map-get(colors.$primary-color, 'hsl');
+    animation: spinner $circle-duration ease-out $loading-spinning-number;
+
+    @include mixins.not-mobile {
+        width: 200px;
+    }
+  }
