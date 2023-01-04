@@ -1,34 +1,73 @@
 @use "../abstracts/mixins";
-@use "../base/colors";
+@use "../base";
 
-$terciary-color: map-get(colors.$terciary-color, 'hsl');
+$terciary-color: map-get(base.$terciary-color, 'hsl');
 
-$transition-menu-check-duration: 400ms;
+$animation-menu-check-duration: 400ms;
 
-$animation-food-load-duration: 450ms;
-$animation-food-opacity-duration: 1000ms;
-$food-numbers: 3;
-$animation-food-load-delay: calc($animation-food-load-duration / $food-numbers);
-$animation-food-opacity-delay: calc($animation-food-opacity-duration / $food-numbers);
+$food-numbers: 9;
+$animation-food-load-duration: 800ms;  
+$animation-food-load-delay: calc(3*$animation-food-load-duration / $food-numbers);
+
+$animation-food-opacity-duration: 500ms;
+
+@keyframes food-gets-visible {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes menu-card-appear {
+    0% {
+        transform: translate3d(0, 5px, 0);
+        // opacity: 0;
+    }
+    100% {
+        transform: translate3d(0, 0px, 0);
+        // opacity: 1;
+    }
+}
+
+@keyframes rotate360 {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+.restaurant-cover {
+    overflow: hidden;
+
+    > img {
+        width: 100%;
+        transform: scaleX(1.1);
+    }
+}
 
 .restaurant-main {
-    margin-top: -40px;
+    // margin-top: -40px;
+    margin-top: -55px;
     position: relative;
     z-index: 2;
     border-radius: 40px 40px 0 0;
-    background: map-get(colors.$background-color, 'hsl');
+    background: map-get(base.$background-color, 'hsl');
     padding: 40px 12px;
 }
 
-.restaurant-title {
+.restaurant-name {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-right: 28px;
-    margin-bottom: 30px;
+    padding-right: 29px;
+    padding-left: 3px;
+    margin-bottom: 34px;
 
-    > h1 {
-        font-size: 1.5em;
+    &__title {
+        font-family: base.$title-font-family;
+        font-size: 1.7rem;
+        font-weight: 100;
     }
 }
 
@@ -40,13 +79,16 @@ $animation-food-opacity-delay: calc($animation-food-opacity-duration / $food-num
 
     @include mixins.not-mobile {
         flex-flow: row wrap;
-        justify-content: space-between;    
+        justify-content: space-between;   
+        column-gap: 40px; 
     }
 }
 
 .service {
 
     &__title {
+        font-size: 0.95rem;
+        font-weight: 200;
         text-transform: uppercase;
         margin-bottom: 6px;
     }
@@ -62,6 +104,10 @@ $animation-food-opacity-delay: calc($animation-food-opacity-duration / $food-num
         flex-direction: column;
         row-gap: 12px;
     }
+
+    @include mixins.not-mobile {
+        flex-grow: 1;
+    }    
 }
 
 .food-item {
@@ -71,40 +117,51 @@ $animation-food-opacity-delay: calc($animation-food-opacity-duration / $food-num
     background-color: hsl(0, 0%, 100%);
     border-radius: 15px;
     overflow: hidden;
-    height: 0px;
-    opacity: 0.3;
+    opacity: 0;
     cursor: pointer;
 
     @include mixins.box-shadow-default; 
 
     @for $i from 1 through $food-numbers {
         &:nth-child(#{$i}) {
-            animation: increase-food-height $animation-food-load-duration $i*$animation-food-load-delay forwards ease-in, increase-food-opacity $animation-food-opacity-duration $i*$animation-food-opacity-delay forwards ease-in;
+            animation: menu-card-appear $animation-food-load-duration $i*$animation-food-load-delay forwards ease-in, food-gets-visible $animation-food-opacity-duration $i*$animation-food-load-delay forwards ease-in;
         }
     }
 
     &__visible {
+        box-sizing: border-box;
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
         width: 100%;
-        padding: 15px 20px 10px 10px;
+        padding: 15px 20px 15px 10px;
+        transition: all $animation-menu-check-duration linear;
+        
+        #{$f}:hover & {
+            width: 83%;
+        }        
     }
 
     &__details {
-        width: 90%;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        width: 80%;
+
+        > * {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     &__name {
-        font-weight: bold;
+        font-size: 1.15rem;
+        font-weight: 500;
         margin-bottom: 8px;
     }
 
     &__recipe {
-        white-space: nowrap;
+        width: 100%;
         font-size: 0.9rem;
+        font-weight: 200;
     }
 
     &__price {
@@ -112,16 +169,17 @@ $animation-food-opacity-delay: calc($animation-food-opacity-duration / $food-num
     }
 
     &__hidden {
+        box-sizing: border-box;
         display: flex;
         justify-content: center;
         align-items: center;
         width: 0px;
         background: $terciary-color;
         overflow: hidden;
-        transition: all $transition-menu-check-duration ease-in;
+        transition: all $animation-menu-check-duration linear;
 
         #{$f}:hover & {
-            width: 30%;
+            width: 17%;
         }
     }
 
@@ -130,30 +188,18 @@ $animation-food-opacity-delay: calc($animation-food-opacity-duration / $food-num
         background-color: hsl(0, 0%, 100%);
         border-radius: 50%;
         padding: 5px;
-        transition: transform $transition-menu-check-duration linear;
-
+        
         #{$f}:hover & {
-            transform: rotate(1turn);
+            animation: rotate360 $animation-menu-check-duration linear forwards;
         }
     }
+
+    @include mixins.not-mobile {
+        width: 350px;
+    }        
 }
 
 .command-menu {
     display: flex;
     justify-content: center;
-}
-
-@keyframes increase-food-opacity {
-    to {
-        opacity: 1;
-    }
-} 
-
-@keyframes increase-food-height {
-    0% {
-        height: 0;
-    }
-    100% {
-        height: auto;
-    }
 }

@@ -1,29 +1,45 @@
 @use "../base/colors";
+@use "../abstracts/mixins";
 
 .card {
+    flex-grow: 1;
+    max-width: 420px;
     border-radius: 20px;
     background: hsl(0, 0%, 100%);
     z-index: 1;
 
     &__header {
             position: relative;
-
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 175px;
+            border-radius: 20px 20px 0 0;
+            overflow: hidden;
         }
         
         &__new-restaurant {
+            font-weight: 500;
             position: absolute;
             top: 12px;
-            right: 10px;
+            right: 12px;
             padding: 7px 10px;
             background: map-get(colors.$terciary-color, 'hsl');
-            color: darken(hsl(165, 56%, 50%), 20%);
-            font-weight: bold;            
+            color: darken(map-get(colors.$terciary-color, 'hsl'), 40%);
         }
 
     &__image {
         width: 100%;
-        border-radius: 20px 20px 0 0;
-        max-height: 175px;
+        height: 100%;
+        object-fit: cover;
+
+        &--small-height {
+            object-position: 0 -50px;
+        }
+
+        &--tall {
+            object-position: 0 -150px;
+        }
     }
 
     &__body {
@@ -38,18 +54,16 @@
         flex-direction: column;
     }
 
-    &__name {
-        font-size: 1.2rem;
-        font-weight: bold;
-        padding-bottom: 5px;
-    }
-
     &__city {
-        color: lighten(hsl(0, 0%, 0%), 20%);
-        font-size: 0.85rem;
+        font-weight: 100;
     }
 
     &__like {
         z-index: 2;
     }
+
+
+    @include mixins.not-mobile {
+        width: 420px;
+    }    
 }

@@ -1,5 +1,6 @@
 @use "../abstracts/mixins";
 @use "../base";
+@use "../components/loaders";
 
 $background-color: map-get(base.$background-color, 'hsl');
 
@@ -7,35 +8,16 @@ $step-icon-width: 25px;
 $steps-number: 3;
 
 @keyframes load-page-elements {
-    0% {
-        opacity: 0;
-    }
     100% {
+        visibility: visible;
         opacity: 1;
     }
 }
 
-.home-content {
+.page__home {
     opacity: 0;
-    animation: load-page-elements 2s 3s linear forwards;
-}
-
-.title {
-    font-size: 1.3rem;
-    font-weight: bold;
-
-    &--hero {
-        width: 61%;
-        padding-bottom: 17px;
-    }
-    
-    &--explanations {
-        padding-bottom: 35px;        
-    }
-
-    &--restaurants {
-        padding-bottom: 25px;        
-    }
+    visibility: collapse;
+    animation: load-page-elements 2s loaders.$loading-total-duration ease-in-out forwards;
 }
 
 .location {
@@ -46,11 +28,11 @@ $steps-number: 3;
     
     &__input {
         font-size: 0.85rem;
-        font-weight: bold;
-        color: darken(hsl(0, 0%, 51%), 20%);
+        font-weight: 300;
         border: none;
         background-color: hsl(0, 0%, 93%);
         padding-left: 20px;
+        outline: none;
     }    
 }
 
@@ -60,10 +42,13 @@ $steps-number: 3;
     background-color: $background-color; 
 
     &__presentation {
-        display: flex;
-        flex-direction: column;
-        align-items: center;        
         margin-bottom: 30px;
+    }
+
+    &__tagline {
+        font-weight: 200;
+        padding-left: 40px;
+        padding-right: 30px;
     }
 }
 
@@ -87,7 +72,7 @@ $steps-number: 3;
         position: relative;
         display: flex;
         column-gap: 20px;
-        padding: 20px 0 20px 30px;
+        padding: 30px 0 30px 30px;
         background: $background-color;
         border-radius: 20px;
         @include mixins.box-shadow-default;
@@ -149,11 +134,12 @@ $steps-number: 3;
         display: flex;
         flex-direction: column;
         row-gap: 20px;
-
+        
         @include mixins.not-mobile {
+            justify-content: space-between;
+            column-gap: 10px;
             flex-flow: row wrap;
-            justify-content: space-around;
-        }
+        }        
     }
 
 }

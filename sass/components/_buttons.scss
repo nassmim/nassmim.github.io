@@ -2,11 +2,12 @@
 @use "../abstracts/mixins";
 
 $keyframes-move-up-duration: 3s;
+$button-main-background-color: linear-gradient(175deg, map-get(base.$secondary-color, 'rgba') 0%, map-get(base.$primary-color, 'rgba') 100%);
 
 .base-btn {
     position: relative;
     padding: 15px 20px;
-    background: linear-gradient(175deg, map-get(base.$secondary-color, 'rgba') 0%, map-get(base.$primary-color, 'rgba') 100%);
+    background: $button-main-background-color;
     border-radius: 50px;
     color: white;
     border: none;
@@ -28,23 +29,6 @@ $keyframes-move-up-duration: 3s;
     }
 }
 
-/* Version simple pour avoir le coeur se remplissant progressivement */
-// .like-btn {
-
-//     &__icon {
-//         fill: transparent;
-//         stroke: black;
-//         stroke-width: 20px;
-//         transition: all 2s linear;
-//     }
-
-//     &:hover {
-//         > .like-btn__icon {
-//             fill: red;
-//         }
-//     }
-// }
-
 .like-btn {
     $lb: &;
     
@@ -56,52 +40,60 @@ $keyframes-move-up-duration: 3s;
     &__icon {
         height: 25px;
         width: 25px;
+        transform: scale(1.05, 1.15);
         position: absolute;
         font-size: 25px; 
         background: #fff;
-        fill: hsl(0, 0%, 100%);
-        stroke: hsl(0, 0%, 0%);
-        stroke-width: 20px;
-
+        
         &--menu {
             background: map-get(base.$background-color, 'hsl');
+            transform: scale(1, 1);
         }
+        
     }
 
     &__moving-icon {
         width: 25px;
         height: 25px;
-        fill: hsl(0, 0%, 100%);
+        font-size: 25px;
+        color: map-get(base.$primary-color, 'hsl');
     }
 
     &:hover {
 
         #{$lb}__icon {
-            animation: fill-color calc($keyframes-move-up-duration/2) calc($keyframes-move-up-duration/2) forwards; 
+            animation: anim-gradient-color 0s $keyframes-move-up-duration 1 forwards; 
         }
 
         #{$lb}__fill {
-            animation: move-color-up $keyframes-move-up-duration cubic-bezier(.2, .6, .8, .4) 1 forwards;
+            animation: anim-move-btn-up $keyframes-move-up-duration cubic-bezier(.2, .6, .8, .4) 1 forwards;
             mix-blend-mode: lighten;
         }
-
-        #{$lb}__moving-icon {
-            fill: map-get(base.$secondary-color, 'hsl');
-        }
     }
 }
 
-@keyframes fill-color {
+@keyframes anim-gradient-color {
     100% {
-        fill: map-get(base.$secondary-color, 'hsl');   
+        
+        background-image: $button-main-background-color;
+        
+        background-size: 100%;
+        background-repeat: repeat;
+        
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent; 
+        -moz-background-clip: text;
+        -moz-text-fill-color: transparent;
+
+        font-weight: bold;
     }
 }
 
-@keyframes move-color-up {
+@keyframes anim-move-btn-up {
     0% {
         transform: translate(0, 25px);
     }
     100% {
-        transform: translate(0, -25px);
+        transform: translate(0, 0);
     }
 }
