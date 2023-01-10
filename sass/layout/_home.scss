@@ -14,6 +14,10 @@ $steps-number: 3;
     }
 }
 
+/* Tout le contenu de la page doit être invisible au démarrage
+On collapse aussi le contenu pour réduire la hauteur de la page
+L'animation permet de faire apparaître le contenu après un certain délai
+dépendant du loader utilisé */
 .page__home {
     opacity: 0;
     visibility: collapse;
@@ -59,7 +63,7 @@ $steps-number: 3;
         display: flex;
         flex-direction: column;
         row-gap: 30px;
-        padding-left: calc($step-icon-width/2);
+        padding-left: calc($step-icon-width/2); // De sorte à ce que le centre de l'icone soit bien sur le bord de l'élément parent
 
         @include mixins.not-mobile {
             flex-flow: row wrap;
@@ -98,6 +102,7 @@ $steps-number: 3;
             font-weight: bold;
         }
 
+        // Ici on boucle sur les éléments indiquant les étapes du site pour que chaque étape ait le chiffre approprié
         @for $i from 1 through $steps-number {
             &:nth-child(#{$i})::before {
                 content: "#{$i}";
@@ -108,6 +113,7 @@ $steps-number: 3;
             border-radius: 20px;
         }
 
+        // Au survol, le bouton et l'icone seront éclaircits
         &:hover {
             > .explanations__step-icon {
                 color: map-get(base.$primary-color, 'rgba');

@@ -3,6 +3,8 @@ $breakpoints: (
   'desktop': 1024px,
 );
 
+// Permettra de spécifier les règles css pour les devices autres que mobiles
+// La variable content sera remplacé par les propriétés/valeurs css 
 @mixin not-mobile {
   @media screen and (min-width: map-get($breakpoints, tablet)) {
     @content
@@ -13,7 +15,9 @@ $breakpoints: (
   box-shadow: 2px 1px 7px 2px rgb(0 0 0 / 10%);
 };
 
-@mixin change-bg-colour($color, $duration: 250ms, $content) {
+// Plusieurs boutons auront le même comportement, avec un changement de couleur progressif
+// La couleur, la durée de la transition ainsi que le contenu du pseudo-élément ::after sont définis en variable car ils peuvent varier
+@mixin change-bg-colour($color, $duration: 250ms, $content: '') {
 
   &::after {
     content: $content;

@@ -40,7 +40,7 @@ $button-main-background-color: linear-gradient(175deg, map-get(base.$secondary-c
     &__icon {
         height: 25px;
         width: 25px;
-        transform: scale(1.05, 1.15);
+        transform: scale(1.05, 1.15); // Donne une forme un peu allongée en hauteur comme sur la maquette
         position: absolute;
         font-size: 25px; 
         
@@ -55,8 +55,8 @@ $button-main-background-color: linear-gradient(175deg, map-get(base.$secondary-c
             background-size: 100%;
             background-repeat: repeat;
             
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; 
+            -webkit-background-clip: text; // le background est appliqué que sur l'îcone
+            -webkit-text-fill-color: transparent; // l'icone est transparente de sorte à ce que le background soit visible
             -moz-background-clip: text;
             -moz-text-fill-color: transparent; 
 
@@ -69,10 +69,14 @@ $button-main-background-color: linear-gradient(175deg, map-get(base.$secondary-c
 
         #{$lb}__icon {
 
+            // Le coeur sans couleur de fond disparaît progressivement grâve à l'animation sur l'opacity
             &--unfilled {
                 animation: anim-remove-color $keyframes-move-up-duration cubic-bezier(.2, .6, .8, .4) 1 forwards;
             }
 
+            /* Le coeur avec couleur de fond apparaît progressivement grâve à l'animation sur l'opacity
+                Cela permettra d'avoir l'effet d'un remplissage progressive du coeur initialement vu par l'utilisateur 
+            */
             &--filled {
                 animation: anim-fill-color $keyframes-move-up-duration cubic-bezier(.2, .6, .8, .4) 1 forwards;
             }

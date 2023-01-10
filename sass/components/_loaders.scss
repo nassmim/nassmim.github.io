@@ -34,6 +34,9 @@ $terminate-load-delay: calc($loading-total-duration - $terminate-load-duration);
     margin-top: -12.25%;
     margin-left: -12.25%;
 
+    /* Le spinner disparaîtra progressivement en jouant sur l'opacité,
+    et une fois l'animation terminée, on réduira sa taille à 0 afin de 
+    laisser les autres éléments être disposés à sa place */
     animation: terminate-load $terminate-load-duration $terminate-load-delay ease-out forwards, remove-spinner 0s $loading-total-duration linear forwards;
 
     &::before {
@@ -46,6 +49,8 @@ $terminate-load-delay: calc($loading-total-duration - $terminate-load-duration);
         border: 2px solid map-get(colors.$background-color, 'hsl');
         border-top-color: map-get(colors.$secondary-color, 'hsl');
         border-bottom-color: map-get(colors.$primary-color, 'hsl');
+
+        // Le spinner tourne pendant un certain temps et fait un nombre complet de tours durant cette durée
         animation: spinner $circle-duration ease-out $loading-spinning-number;
     }
 

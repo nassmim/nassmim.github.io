@@ -23,11 +23,9 @@ $animation-food-opacity-duration: 500ms;
 @keyframes menu-card-appear {
     0% {
         transform: translate3d(0, 5px, 0);
-        // opacity: 0;
     }
     100% {
         transform: translate3d(0, 0px, 0);
-        // opacity: 1;
     }
 }
 
@@ -44,7 +42,7 @@ $animation-food-opacity-duration: 500ms;
         width: 100%;
         max-height: 275px;
         object-fit: cover;
-        transform: scaleX(1.1);
+        transform: scaleX(1.1); // Pour mieux coller à la maquette, à vérifier si déformation des images
 
         @include mixins.not-mobile {
             max-height: 500px;
@@ -54,7 +52,6 @@ $animation-food-opacity-duration: 500ms;
 }
 
 .restaurant-main {
-    // margin-top: -40px;
     margin-top: -55px;
     position: relative;
     z-index: 2;
@@ -129,6 +126,9 @@ $animation-food-opacity-duration: 500ms;
 
     @include mixins.box-shadow-default; 
 
+    /* Chaque repas apparaît l'un après l'autre, l'apparition se faisant via l'opacité
+    et une fois l'élément précédent apparu. Le repas commence à apparaître un peu avant
+    que son placement soit totalement fini */
     @for $i from 1 through $food-numbers {
         &:nth-child(#{$i}) {
             animation: menu-card-appear $animation-food-load-duration $i*$animation-food-load-delay forwards ease-in, food-gets-visible $animation-food-opacity-duration $i*$animation-food-load-delay forwards ease-in;
@@ -139,8 +139,11 @@ $animation-food-opacity-duration: 500ms;
         box-sizing: border-box;
         width: 100%;
         padding: 15px 0px 15px 10px;
+
+        // un slide montrant un check est effectué lorsque l'utilisateur survole un repas
         transition: all $animation-menu-check-duration linear;
         
+        // Au survol, la largeur du bloc contenant le texte rétrécit afin de laisser suffisamment de place au slider
         #{$f}:hover & {
             width: 83%;
         }        
@@ -183,6 +186,8 @@ $animation-food-opacity-duration: 500ms;
         width: 0px;
         background: $terciary-color;
         overflow: hidden;
+
+        // Le slider apparaît si l'utilisateur survol le repas
         transition: all $animation-menu-check-duration linear;
 
         #{$f}:hover & {
@@ -197,6 +202,7 @@ $animation-food-opacity-duration: 500ms;
         padding: 5px;
         
         #{$f}:hover & {
+            // L'icône de check à l'intérieur du slide qui apparaît lors du survol d'un repas doit être en train de tourner lors de son apparition
             animation: rotate360 $animation-menu-check-duration linear forwards;
         }
     }

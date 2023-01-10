@@ -30,19 +30,20 @@
 
     }
 
+    // Helper pour faciliter, via flexbox, la disposition du logo et du bouton de retour en arrière pour les pages de menu
     &::after {
         content: " ";
         display: block;
         flex: 1;
     }
 
+    // Sur la page home, aucun besoin du helper car il n'y a que le logo à disposer
     &--home {
 
         &::after {
             flex: 0;
         }        
     }        
-
 }
 
 
