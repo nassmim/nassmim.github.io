@@ -26,7 +26,7 @@ $terminate-load-delay: calc($loading-total-duration - $terminate-load-duration);
 }
 
 .spinner {
-    aspect-ratio: 1;
+    aspect-ratio: 1/1;
     width: 50%;
     position: fixed;
     left: 50%;
@@ -40,7 +40,7 @@ $terminate-load-delay: calc($loading-total-duration - $terminate-load-duration);
         content: '';
         box-sizing: border-box;
         position: absolute;
-        aspect-ratio: 1;
+        aspect-ratio: 1/1;
         width: 50%;
         border-radius: 50%;
         border: 2px solid map-get(colors.$background-color, 'hsl');

@@ -1,7 +1,7 @@
 @use "../base";
 @use "../abstracts/mixins";
 
-$keyframes-move-up-duration: 3s;
+$keyframes-move-up-duration: 1s;
 $button-main-background-color: linear-gradient(175deg, map-get(base.$secondary-color, 'rgba') 0%, map-get(base.$primary-color, 'rgba') 100%);
 
 .base-btn {
@@ -43,57 +43,51 @@ $button-main-background-color: linear-gradient(175deg, map-get(base.$secondary-c
         transform: scale(1.05, 1.15);
         position: absolute;
         font-size: 25px; 
-        background: #fff;
         
         &--menu {
             background: map-get(base.$background-color, 'hsl');
             transform: scale(1, 1);
         }
-        
-    }
 
-    &__moving-icon {
-        width: 25px;
-        height: 25px;
-        font-size: 25px;
-        color: map-get(base.$primary-color, 'hsl');
+        &--filled {
+            background-image: $button-main-background-color;
+        
+            background-size: 100%;
+            background-repeat: repeat;
+            
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; 
+            -moz-background-clip: text;
+            -moz-text-fill-color: transparent; 
+
+            opacity: 0;
+        }
+        
     }
 
     &:hover {
 
         #{$lb}__icon {
-            animation: anim-gradient-color 0s $keyframes-move-up-duration 1 forwards; 
-        }
 
-        #{$lb}__fill {
-            animation: anim-move-btn-up $keyframes-move-up-duration cubic-bezier(.2, .6, .8, .4) 1 forwards;
-            mix-blend-mode: lighten;
+            &--unfilled {
+                animation: anim-remove-color $keyframes-move-up-duration cubic-bezier(.2, .6, .8, .4) 1 forwards;
+            }
+
+            &--filled {
+                animation: anim-fill-color $keyframes-move-up-duration cubic-bezier(.2, .6, .8, .4) 1 forwards;
+            }
         }
     }
 }
 
-@keyframes anim-gradient-color {
+@keyframes anim-fill-color {
     100% {
-        
-        background-image: $button-main-background-color;
-        
-        background-size: 100%;
-        background-repeat: repeat;
-        
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent; 
-        -moz-background-clip: text;
-        -moz-text-fill-color: transparent;
-
-        font-weight: bold;
+        opacity: 1; 
     }
 }
 
-@keyframes anim-move-btn-up {
-    0% {
-        transform: translate(0, 25px);
-    }
+@keyframes anim-remove-color {
     100% {
-        transform: translate(0, 0);
+        opacity: 0; 
     }
 }

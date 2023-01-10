@@ -42,7 +42,14 @@ $animation-food-opacity-duration: 500ms;
 
     > img {
         width: 100%;
+        max-height: 275px;
+        object-fit: cover;
         transform: scaleX(1.1);
+
+        @include mixins.not-mobile {
+            max-height: 500px;
+            transform: scaleX(1);
+        }
     }
 }
 
@@ -130,11 +137,8 @@ $animation-food-opacity-duration: 500ms;
 
     &__visible {
         box-sizing: border-box;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
         width: 100%;
-        padding: 15px 20px 15px 10px;
+        padding: 15px 0px 15px 10px;
         transition: all $animation-menu-check-duration linear;
         
         #{$f}:hover & {
@@ -142,26 +146,29 @@ $animation-food-opacity-duration: 500ms;
         }        
     }
 
-    &__details {
-        width: 80%;
-
-        > * {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    }
-
     &__name {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
         font-weight: 500;
         margin-bottom: 8px;
+        padding-right: 22%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;        
+    }
+    
+    &__details {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        padding-right: 20px;
     }
 
     &__recipe {
-        width: 100%;
-        font-size: 0.9rem;
+        width: 77%;
         font-weight: 200;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;        
     }
 
     &__price {
